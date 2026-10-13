@@ -275,3 +275,32 @@
     sprite: _Sunrise/Clothing/Eyes/Glasses/stuttering_glasses.rsi
   - type: AddAccentClothing
     accent: StutteringAccent
+
+- type: entity
+  parent: [ClothingEyesBase, BaseEngineeringContraband]
+  id: ClothingEyesVisorEngineering
+  name: engineering visor
+  description: Professional engineering visor with welding protection and a built‑in T‑scanner.
+  components:
+  - type: Sprite
+    sprite: _Sunrise/Clothing/Eyes/Glasses/engvisor.rsi
+  - type: Clothing
+    sprite: _Sunrise/Clothing/Eyes/Glasses/engvisor.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: TrayScanner
+    enabled: false
+  - type: ToggleClothing
+    action: ActionToggleTRay
+    disableOnUnequip: true
+    targetSlot: eyes
+  - type: ItemToggle
+    activated: false
+    predictable: false
+    onUse: false
+  - type: UseDelay
+    delay: 1
+  - type: Tag
+    tags:
+    - WhitelistChameleon

@@ -9,6 +9,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Shared.SubFloor;
 
@@ -27,6 +28,7 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
+        SubscribeLocalEvent<TrayScannerComponent, ItemToggledEvent>(OnItemToggled);
         SubscribeLocalEvent<TrayScannerComponent, GetVerbsEvent<AlternativeVerb>>(OnAddSwitchModeVerb);
         SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
         SubscribeLocalEvent<TrayScannerComponent, GotUnequippedHandEvent>(OnTrayHandUnequipped);
@@ -120,9 +122,14 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
     {
         OnUnequip(args.User);
     }
-
     private void OnTrayHandEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedHandEvent args)
     {
+        if (HasComp<ItemToggleComponent>(ent))
+        {
+            ent.Comp.Enabled = false;
+            Dirty(ent);
+        }
+
         OnEquip(args.User);
     }
 
@@ -135,10 +142,12 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
     {
         OnEquip(args.EquipTarget);
     }
-
     private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
+            return;
+
+        if (HasComp<ItemToggleComponent>(ent))
             return;
 
         ent.Comp.Enabled = !ent.Comp.Enabled;
@@ -146,9 +155,15 @@ public abstract partial class SharedTrayScannerSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
-            _appearance.SetData(ent, TrayScannerVisual.Visual, ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
+            _appearance.SetData(ent, TrayScannerVisual.Visual,
+                ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
         }
 
         args.Handled = true;
+    }
+    private void OnItemToggled(Entity<TrayScannerComponent> ent, ref ItemToggledEvent args)
+    {
+        ent.Comp.Enabled = args.Activated;
+        Dirty(ent);
     }
 }
