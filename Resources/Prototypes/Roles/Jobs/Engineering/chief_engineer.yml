@@ -46,7 +46,7 @@
   equipment:
     id: CEPDA
 #    head: ClothingHeadHatHardhatWhite # Sunrise-Edit
-    eyes: ClothingEyesGlassesMeson
+    eyes: ClothingEyesVisorEngineering
     ears: ClothingHeadsetCE
     belt: ClothingBeltUtilityEngineering
   storage:

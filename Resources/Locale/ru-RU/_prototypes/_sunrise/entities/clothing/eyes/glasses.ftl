@@ -32,4 +32,4 @@ ent-ClothingEyesGlassesSniperThermalSyndie = оптические теплови
 ent-ClothingEyesGlassesThermalChameleon = хамелеонный термальный сканер
     .desc = Термальные очки с модулем хамелеона; меняют внешний вид и дают термовизор.
 ent-ClothingEyesVisorEngineering = Инженерный визор
-    .desc = Профессиональный инженерный визор с защитой от сварки и встроенным T‑сканером.
+    .desc = Профессиональный инженерный визор с защитой от сварки и встроенным T сканером.

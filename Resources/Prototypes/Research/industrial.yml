@@ -177,6 +177,7 @@
     - BorgModuleAdvancedTool
     - Fulton
     - FultonBeacon
+    - ClothingEyesVisorEngineering
 
 - type: technology
   id: MassExcavation
